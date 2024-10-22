@@ -14,13 +14,18 @@
 <body>
     <div class="auth-container">
         <div class="auth-form">
-            <h2>Welcome to Where's Gandhi</h2>
-            <p id="toggle-text">New user? <span id="toggle-auth">Sign Up</span></p>
+            <h2 id="auth-heading">Welcome to Where's Gandhi</h2>
+            <p id="toggle-text">
+                New user? <span id="toggle-auth" class="clickable">Sign Up</span>
+            </p>
 
             <form id="auth-form">
+                <div id="name-field" class="hidden">
+                    <input type="text" id="name" placeholder="Enter your name" />
+                </div>
                 <input type="email" id="email" placeholder="Enter your email" required />
                 <input type="password" id="password" placeholder="Enter your password" required />
-                <button type="submit" id="auth-button">Sign Up</button>
+                <button type="submit" id="auth-button">Sign In</button>
                 <button type="button" id="google-signin">Continue with Google</button>
             </form>
 
