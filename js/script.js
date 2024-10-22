@@ -1,4 +1,4 @@
-// Import Firebase SDKs
+// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-analytics.js";
 
@@ -18,14 +18,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-// Wait until DOM is loaded
-window.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('signup-form');
-  
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    console.log(`Email submitted: ${email}`);
-    document.getElementById('message').textContent = "Thank you for signing up!";
-  });
+// Handle form submission
+const form = document.getElementById('signup-form');
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  console.log(`Email submitted: ${email}`);
+  document.getElementById('message').textContent = "Thank you for signing up!";
 });
