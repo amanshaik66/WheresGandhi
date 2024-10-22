@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Where's Gandhi</title>
+    <title>Where's Gandhi - Stay Updated</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <!-- Link to CSS -->
     <link rel="stylesheet" href="css/styles.css">
@@ -12,30 +15,48 @@
     <script type="module" src="js/script.js" defer></script>
 </head>
 <body>
-    <div id="signup-container">
-        <h1>Sign up for Where's Gandhi Updates</h1>
-
-        <form id="signup-form">
-            <input 
-                type="email" 
-                id="email" 
-                placeholder="Enter your email" 
-                aria-label="Email Address" 
-                required 
-            />
-            <input 
-                type="password" 
-                id="password" 
-                placeholder="Enter a password" 
-                aria-label="Password" 
-                required 
-            />
-            <div>
-                <button type="submit">Sign Up</button>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h2>Where's Gandhi?</h2>
             </div>
-        </form>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <p id="message" role="alert"></p>
-    </div>
+    <section id="hero">
+        <div class="hero-content">
+            <h1>Stay Informed. Stay Engaged.</h1>
+            <p>Join the movement and stay up-to-date with the latest updates about Where’s Gandhi.</p>
+
+            <form id="signup-form" class="signup-form">
+                <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="Enter your email" 
+                    aria-label="Email Address" 
+                    required 
+                />
+                <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="Enter a password" 
+                    aria-label="Password" 
+                    required 
+                />
+                <button type="submit" class="btn-signup">Sign Up</button>
+            </form>
+
+            <p id="message" role="alert"></p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Where's Gandhi. All Rights Reserved.</p>
+    </footer>
 </body>
 </html>
