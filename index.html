@@ -10,33 +10,38 @@
 
     <!-- Firebase and Custom JavaScript -->
     <script type="module" src="js/script.js" defer></script>
-    
+
     <!-- SEO and Favicon -->
     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
     <meta name="description" content="Stay updated with Where's Gandhi. Sign up now!">
     <meta name="keywords" content="Where's Gandhi, updates, news, subscription">
-    <meta name="author" content="Your Name">
 </head>
 <body>
-    <h1>Sign up for Where's Gandhi Updates</h1>
+    <div class="container">
+        <header>
+            <h1>Where's Gandhi</h1>
+            <p>Stay informed. Get updates directly to your inbox.</p>
+        </header>
 
-    <form id="signup-form">
-        <input type="email" id="email" placeholder="Enter your email" required />
-        <input type="password" id="password" placeholder="Enter a password" required />
-        <div>
-            <button type="submit">Sign Up</button>
+        <div class="form-container">
+            <form id="signup-form">
+                <h2>Create an Account</h2>
+                <input type="email" id="email" placeholder="Enter your email" required />
+                <input type="password" id="password" placeholder="Create a password" required />
+                <button type="submit">Sign Up</button>
+            </form>
+
+            <p id="message"></p>
+
+            <div class="divider">OR</div>
+
+            <form id="signin-form">
+                <h2>Login to your Account</h2>
+                <input type="email" id="login-email" placeholder="Enter your email" required />
+                <input type="password" id="login-password" placeholder="Enter your password" required />
+                <button type="submit">Log In</button>
+            </form>
         </div>
-    </form>
-
-    <p id="message"></p>
-
-    <h2>Already have an account?</h2>
-    <form id="signin-form">
-        <input type="email" id="login-email" placeholder="Enter your email" required />
-        <input type="password" id="login-password" placeholder="Enter your password" required />
-        <div>
-            <button type="submit">Log In</button>
-        </div>
-    </form>
+    </div>
 </body>
 </html>
