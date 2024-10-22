@@ -21,24 +21,23 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 getAnalytics(app);
 
-// Form submission handling
-//document.getElementById('signup-form').addEventListener('submit', (e) => {
-  //e.preventDefault();
-  //const email = document.getElementById('email').value;
-  //console.log(`Email submitted: ${email}`);
-  //document.getElementById('message').textContent = "Thank you for signing up!";
-//});
-// Handle Signup Form Submission
+// Handle Signup Form Submission with enhanced error handling
 const form = document.getElementById('signup-form');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const email = document.getElementById('email').value;
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value; // Assuming you have a password input
+
+  if (!email || !password) {
+    document.getElementById('message').textContent = "Email and password are required.";
+    return;
+  }
 
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, 'defaultPassword');
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    // Save user data in Firestore
+    // Save user data in Firestore with proper error handling
     await setDoc(doc(db, "users", user.uid), {
       email: user.email,
       signupDate: new Date().toISOString()
@@ -48,6 +47,27 @@ form.addEventListener('submit', async (e) => {
     console.log(`User created: ${user.email}`);
   } catch (error) {
     console.error("Error signing up:", error);
-    document.getElementById('message').textContent = "Signup failed! Please try again.";
+    handleSignupError(error);
   }
 });
+
+// Function to handle signup errors more gracefully
+function handleSignupError(error) {
+  let message = "Signup failed! Please try again.";
+
+  switch (error.code) {
+    case 'auth/email-already-in-use':
+      message = "This email is already in use.";
+      break;
+    case 'auth/invalid-email':
+      message = "The email address is invalid.";
+      break;
+    case 'auth/weak-password':
+      message = "Password must be at least 6 characters long.";
+      break;
+    default:
+      message = "An unexpected error occurred. Please try again.";
+  }
+
+  document.getElementById('message').textContent = message;
+}
