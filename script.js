@@ -1,12 +1,21 @@
 // Firebase Configuration
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
+  const firebaseConfig = {
+
+    apiKey: "AIzaSyBHAFsCc4lq4BceInquAKscpNvX988i4_Q",
+
+    authDomain: "wheresgandhi-77451.firebaseapp.com",
+
+    projectId: "wheresgandhi-77451",
+
+    storageBucket: "wheresgandhi-77451.appspot.com",
+
+    messagingSenderId: "174362976106",
+
+    appId: "1:174362976106:web:6b86a71d0b679f4ebe0f13",
+
+    measurementId: "G-Z5QFTF0V58"
+
+  };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
