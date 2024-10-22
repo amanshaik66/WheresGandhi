@@ -21,12 +21,12 @@
 
             <form id="auth-form">
                 <div id="name-field" class="hidden">
-                    <input type="text" id="name" placeholder="Enter your name" />
+                    <input type="text" id="name" placeholder="Enter your name" required />
                 </div>
                 <input type="email" id="email" placeholder="Enter your email" required />
                 <input type="password" id="password" placeholder="Enter your password" required />
-                <button type="submit" id="auth-button">Sign In</button>
-                <button type="button" id="google-signin">Continue with Google</button>
+                <button type="submit" id="auth-button" class="primary-btn">Sign In</button>
+                <button type="button" id="google-signin" class="google-btn">Continue with Google</button>
             </form>
 
             <p id="message"></p>
