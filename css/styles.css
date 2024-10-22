@@ -1,94 +1,57 @@
-/* Global Styles */
+/* General Styles */
 body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to right, #4A90E2, #50E3C2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #6fb1fc, #4364f7, #1f3b8b);
     height: 100vh;
-    overflow: hidden;
-    color: #fff;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Container */
-.container {
+/* Authentication Page Styles */
+.auth-container {
+    width: 400px;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    max-width: 400px;
-    width: 100%;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Header */
-header h1 {
-    font-size: 36px;
-    margin-bottom: 5px;
-}
-
-header p {
-    font-size: 16px;
+.auth-form h2 {
     margin-bottom: 20px;
-    color: #333;
 }
 
-/* Form Styles */
-.form-container {
-    margin-top: 10px;
-}
-
-form h2 {
-    margin-bottom: 10px;
-    color: #333;
-}
-
-input[type="email"], input[type="password"] {
+.auth-form input {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     margin: 10px 0;
     border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 16px;
-    background-color: #f4f4f4;
-    transition: background-color 0.3s;
+    border-radius: 5px;
 }
 
-input:focus {
-    background-color: #fff;
-    outline: none;
-    border-color: #50E3C2;
-}
-
-/* Buttons */
 button {
     width: 100%;
-    padding: 12px;
-    background-color: #4A90E2;
+    padding: 10px;
+    margin: 10px 0;
     border: none;
-    border-radius: 6px;
+    background-color: #4CAF50;
     color: white;
-    font-size: 18px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    border-radius: 5px;
 }
 
 button:hover {
-    background-color: #357ABD;
+    background-color: #45a049;
 }
 
-/* Divider */
-.divider {
-    margin: 15px 0;
-    font-weight: bold;
-    color: #666;
+.hidden {
+    display: none;
 }
 
-/* Message */
-#message {
-    font-size: 14px;
-    margin-top: 10px;
-    color: #4CAF50;
+.clickable {
+    color: #1f3b8b;
+    cursor: pointer;
+    text-decoration: underline;
 }
