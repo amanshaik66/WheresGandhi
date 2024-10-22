@@ -1,36 +1,62 @@
+/* General Styles */
 body {
+    margin: 0;
+    padding: 0;
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
+}
+
+/* Header Styles */
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px;
     text-align: center;
-    padding: 20px;
 }
 
-h1 {
-    color: #333;
+header h1 {
+    margin: 0;
 }
 
+/* Form Styles */
 form {
-    margin: 20px 0;
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
 input {
+    width: calc(100% - 20px);
     padding: 10px;
-    margin-right: 10px;
-    border-radius: 5px;
+    margin: 10px 0;
     border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 button {
-    padding: 10px 20px;
+    width: 100%;
+    padding: 10px;
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-#map {
-    width: 80%;
-    margin: 20px auto;
-    border: 2px solid black;
+button:hover {
+    background-color: #45a049;
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
