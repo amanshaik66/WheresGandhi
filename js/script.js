@@ -93,7 +93,7 @@ document.getElementById('google-signin').addEventListener('click', async () => {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
         messageElement.textContent = `Welcome, ${user.email}!`;
-        window.location.href = 'currency-tracker.html';
+        window.location.href = 'currencyTracker.html';
     } catch (error) {
         console.error("Google Sign-In error:", error);
         messageElement.textContent = error.message;
