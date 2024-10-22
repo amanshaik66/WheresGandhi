@@ -19,16 +19,29 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Toggle between Sign Up and Sign In
-let isSignUp = true;
+// Toggle between Sign Up and Sign In modes
+let isSignUp = false;
 
-document.getElementById('toggle-auth').addEventListener('click', () => {
+document.getElementById('toggle-auth').addEventListener('click', toggleAuthMode);
+
+function toggleAuthMode() {
     isSignUp = !isSignUp;
+
     document.getElementById('auth-button').textContent = isSignUp ? 'Sign Up' : 'Sign In';
-    document.getElementById('toggle-text').innerHTML = isSignUp
-        ? 'Already have an account? <span id="toggle-auth">Sign In</span>'
-        : 'New user? <span id="toggle-auth">Sign Up</span>';
-});
+    document.getElementById('auth-heading').textContent = isSignUp
+        ? 'Create Your Account'
+        : 'Welcome Back';
+
+    const toggleText = isSignUp
+        ? 'Already have an account? <span class="clickable" id="toggle-auth">Sign In</span>'
+        : 'New user? <span class="clickable" id="toggle-auth">Sign Up</span>';
+    document.getElementById('toggle-text').innerHTML = toggleText;
+
+    document.getElementById('name-field').classList.toggle('hidden', !isSignUp);
+
+    // Re-attach the event listener for the new toggle element
+    document.getElementById('toggle-auth').addEventListener('click', toggleAuthMode);
+}
 
 // Handle Form Submission
 const form = document.getElementById('auth-form');
@@ -39,17 +52,18 @@ form.addEventListener('submit', async (e) => {
     e.preventDefault();
     loader.classList.remove('hidden');
 
+    const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
     try {
-        let user;
         if (isSignUp) {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            user = userCredential.user;
+            const user = userCredential.user;
             await sendEmailVerification(user);
 
             await setDoc(doc(db, "users", user.uid), {
+                name: name,
                 email: user.email,
                 signupDate: new Date().toISOString()
             });
@@ -57,7 +71,7 @@ form.addEventListener('submit', async (e) => {
             messageElement.textContent = "Sign-up successful! Please verify your email.";
         } else {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            user = userCredential.user;
+            messageElement.textContent = `Welcome back, ${userCredential.user.email}!`;
         }
 
         window.location.href = 'currency-tracker.html';
@@ -77,6 +91,7 @@ document.getElementById('google-signin').addEventListener('click', async () => {
     try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
+
         messageElement.textContent = `Welcome, ${user.email}!`;
         window.location.href = 'currency-tracker.html';
     } catch (error) {
