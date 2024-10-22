@@ -75,7 +75,7 @@ form.addEventListener('submit', async (e) => {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             messageElement.textContent = `Welcome back, ${userCredential.user.email}!`;
         }
-        window.location.href = 'currency-tracker.html';
+        window.location.href = 'currencyTracker.html';
     } catch (error) {
         console.error("Authentication error:", error);
         messageElement.textContent = error.message;
