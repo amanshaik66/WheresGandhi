@@ -1,11 +1,11 @@
-// Firebase Configuration
+// Import Firebase modules correctly
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-analytics.js";
 
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBHAFsCc4lq4BceInquAKscpNvX988i4_Q",
   authDomain: "wheresgandhi-77451.firebaseapp.com",
-  databaseURL: "https://wheresgandhi-77451-default-rtdb.firebaseio.com",
   projectId: "wheresgandhi-77451",
   storageBucket: "wheresgandhi-77451.appspot.com",
   messagingSenderId: "174362976106",
@@ -13,15 +13,11 @@ const firebaseConfig = {
   measurementId: "G-Z5QFTF0V58"
 };
 
-// Initialize Firebase
+// Initialize Firebase and analytics
 const app = initializeApp(firebaseConfig);
-let analytics;
-if (window.ga && ga.loaded) {
-  analytics = getAnalytics(app);
-  console.log("Google Analytics initialized");
-}
+getAnalytics(app);
 
-// Form Submission Handling
+// Form submission handling
 document.getElementById('signup-form').addEventListener('submit', (e) => {
   e.preventDefault();
   const email = document.getElementById('email').value;
