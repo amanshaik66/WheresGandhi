@@ -8,32 +8,31 @@
 </head>
 <body>
     <div class="tracker-container">
-        <h2>Currency Bill Entry & Tracking</h2>
-        <form id="bill-form">
-            <input type="text" id="bill-amount" placeholder="Enter Bill Amount" required />
-            <input type="text" id="currency" placeholder="Enter Currency (e.g., INR, USD)" required />
-            <button type="submit">Submit Bill</button>
-        </form>
+        <header class="tracker-header">
+            <h2>Currency Bill Entry & Tracking</h2>
+            <button id="logout-button" class="secondary-btn">Logout</button>
+        </header>
 
-        <h3>Tracked Bills:</h3>
-        <ul id="bill-list"></ul>
+        <section class="form-section">
+            <form id="bill-form">
+                <input type="number" id="bill-amount" placeholder="Enter Bill Amount" required />
+                <input type="text" id="currency" placeholder="Enter Currency (e.g., INR, USD)" required />
+                <input type="text" id="location" placeholder="Enter Location (City)" required />
+                <button type="submit" class="primary-btn">Submit Bill</button>
+            </form>
+        </section>
+
+        <section class="search-section">
+            <h3>Search Tracked Bills</h3>
+            <input type="text" id="search-bar" placeholder="Search by currency or location..." />
+        </section>
+
+        <section class="bill-display">
+            <h3>Tracked Bills:</h3>
+            <ul id="bill-list"></ul>
+        </section>
     </div>
 
-    <script>
-        const billForm = document.getElementById('bill-form');
-        const billList = document.getElementById('bill-list');
-
-        billForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const amount = document.getElementById('bill-amount').value;
-            const currency = document.getElementById('currency').value;
-
-            const listItem = document.createElement('li');
-            listItem.textContent = `Bill: ${amount} ${currency}`;
-            billList.appendChild(listItem);
-
-            billForm.reset();
-        });
-    </script>
+    <script src="js/currencyTracker.js"></script>
 </body>
 </html>
