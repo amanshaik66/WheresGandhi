@@ -1,6 +1,13 @@
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signInWithPopup, 
+    GoogleAuthProvider, 
+    sendEmailVerification 
+} from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
 // Firebase configuration
@@ -19,27 +26,22 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Toggle between Sign Up and Sign In modes
+// Toggle between Sign In and Sign Up
 let isSignUp = false;
-
 document.getElementById('toggle-auth').addEventListener('click', toggleAuthMode);
 
 function toggleAuthMode() {
     isSignUp = !isSignUp;
 
     document.getElementById('auth-button').textContent = isSignUp ? 'Sign Up' : 'Sign In';
-    document.getElementById('auth-heading').textContent = isSignUp
-        ? 'Create Your Account'
-        : 'Welcome Back';
+    document.getElementById('auth-heading').textContent = isSignUp ? 'Create Your Account' : 'Welcome Back';
+    document.getElementById('name-field').classList.toggle('hidden', !isSignUp);
 
-    const toggleText = isSignUp
-        ? 'Already have an account? <span class="clickable" id="toggle-auth">Sign In</span>'
+    const toggleText = isSignUp 
+        ? 'Already have an account? <span class="clickable" id="toggle-auth">Sign In</span>' 
         : 'New user? <span class="clickable" id="toggle-auth">Sign Up</span>';
     document.getElementById('toggle-text').innerHTML = toggleText;
 
-    document.getElementById('name-field').classList.toggle('hidden', !isSignUp);
-
-    // Re-attach the event listener for the new toggle element
     document.getElementById('toggle-auth').addEventListener('click', toggleAuthMode);
 }
 
@@ -73,7 +75,6 @@ form.addEventListener('submit', async (e) => {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             messageElement.textContent = `Welcome back, ${userCredential.user.email}!`;
         }
-
         window.location.href = 'currency-tracker.html';
     } catch (error) {
         console.error("Authentication error:", error);
@@ -91,7 +92,6 @@ document.getElementById('google-signin').addEventListener('click', async () => {
     try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
-
         messageElement.textContent = `Welcome, ${user.email}!`;
         window.location.href = 'currency-tracker.html';
     } catch (error) {
