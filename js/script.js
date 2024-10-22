@@ -1,7 +1,6 @@
-// Import Firebase modules correctly
+// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-analytics.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
 // Firebase configuration
@@ -19,45 +18,71 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-getAnalytics(app);
 
-// Signup Form Submission
-const signupForm = document.getElementById('signup-form');
-signupForm.addEventListener('submit', async (e) => {
+// Toggle between Sign Up and Sign In
+let isSignUp = true;
+
+document.getElementById('toggle-auth').addEventListener('click', () => {
+    isSignUp = !isSignUp;
+    document.getElementById('auth-button').textContent = isSignUp ? 'Sign Up' : 'Sign In';
+    document.getElementById('toggle-text').innerHTML = isSignUp
+        ? 'Already have an account? <span id="toggle-auth">Sign In</span>'
+        : 'New user? <span id="toggle-auth">Sign Up</span>';
+});
+
+// Handle Form Submission
+const form = document.getElementById('auth-form');
+const loader = document.getElementById('loader');
+const messageElement = document.getElementById('message');
+
+form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    loader.classList.remove('hidden');
+
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+        let user;
+        if (isSignUp) {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            user = userCredential.user;
+            await sendEmailVerification(user);
 
-        // Save user data in Firestore
-        await setDoc(doc(db, "users", user.uid), {
-            email: user.email,
-            signupDate: new Date().toISOString()
-        });
+            await setDoc(doc(db, "users", user.uid), {
+                email: user.email,
+                signupDate: new Date().toISOString()
+            });
 
-        document.getElementById('message').textContent = "Thank you for signing up!";
+            messageElement.textContent = "Sign-up successful! Please verify your email.";
+        } else {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            user = userCredential.user;
+        }
+
+        window.location.href = 'currency-tracker.html';
     } catch (error) {
-        console.error("Error signing up:", error);
-        document.getElementById('message').textContent = "Signup failed! Please try again.";
+        console.error("Authentication error:", error);
+        messageElement.textContent = error.message;
+    } finally {
+        loader.classList.add('hidden');
     }
 });
 
-// Sign-In Form Submission
-const signinForm = document.getElementById('signin-form');
-signinForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
+// Google Sign-In
+document.getElementById('google-signin').addEventListener('click', async () => {
+    loader.classList.remove('hidden');
+    const provider = new GoogleAuthProvider();
 
     try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-        document.getElementById('message').textContent = `Welcome back, ${user.email}!`;
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        messageElement.textContent = `Welcome, ${user.email}!`;
+        window.location.href = 'currency-tracker.html';
     } catch (error) {
-        console.error("Error signing in:", error);
-        document.getElementById('message').textContent = "Login failed. Please check your credentials.";
+        console.error("Google Sign-In error:", error);
+        messageElement.textContent = error.message;
+    } finally {
+        loader.classList.add('hidden');
     }
 });
