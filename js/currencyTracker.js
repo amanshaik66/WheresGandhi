@@ -1,33 +1,77 @@
-// Handle Logout
-document.getElementById('logout-button').addEventListener('click', () => {
-    alert('Logging out...');
-    // Redirect to login page
-    window.location.href = 'index.html';
-});
+// Elements
+const billForm = document.getElementById('bill-form');
+const billList = document.getElementById('bill-list');
+const searchBar = document.getElementById('search-bar');
+const logoutButton = document.getElementById('logout-button');
 
-// Handle Form Submission
-const form = document.getElementById('currency-form');
-const transactionList = document.getElementById('transaction-list');
+// Event Listeners
+billForm.addEventListener('submit', addBill);
+searchBar.addEventListener('input', searchBills);
+logoutButton.addEventListener('click', logout);
 
-form.addEventListener('submit', (e) => {
+// Load bills from local storage on page load
+document.addEventListener('DOMContentLoaded', loadBills);
+
+// Add a new bill to the list and local storage
+function addBill(e) {
     e.preventDefault();
-    const description = document.getElementById('description').value;
-    const amount = parseFloat(document.getElementById('amount').value);
-    const type = document.getElementById('type').value;
 
-    addTransaction(description, amount, type);
-    form.reset();
-});
+    const amount = document.getElementById('bill-amount').value;
+    const currency = document.getElementById('currency').value;
+    const location = document.getElementById('location').value;
+    const date = new Date().toLocaleDateString();
 
-// Function to Add Transaction
-function addTransaction(description, amount, type) {
-    const transaction = document.createElement('div');
-    transaction.className = `transaction ${type}`;
+    const bill = { amount, currency, location, date };
+    saveBillToStorage(bill);
+    renderBill(bill);
 
-    transaction.innerHTML = `
-        <p>${description}</p>
-        <p>${type === 'income' ? '+' : '-'}$${amount.toFixed(2)}</p>
+    billForm.reset();
+}
+
+// Render a single bill
+function renderBill(bill) {
+    const listItem = document.createElement('li');
+    listItem.innerHTML = `
+        <strong>${bill.currency} ${bill.amount}</strong> - ${bill.location} (Date: ${bill.date})
     `;
+    billList.appendChild(listItem);
+}
 
-    transactionList.appendChild(transaction);
+// Load bills from local storage and display them
+function loadBills() {
+    const bills = getBillsFromStorage();
+    bills.forEach(renderBill);
+}
+
+// Save a new bill to local storage
+function saveBillToStorage(bill) {
+    const bills = getBillsFromStorage();
+    bills.push(bill);
+    localStorage.setItem('bills', JSON.stringify(bills));
+}
+
+// Retrieve bills from local storage
+function getBillsFromStorage() {
+    const bills = localStorage.getItem('bills');
+    return bills ? JSON.parse(bills) : [];
+}
+
+// Search bills by currency or location
+function searchBills(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    const bills = getBillsFromStorage();
+
+    billList.innerHTML = ''; // Clear current list
+    const filteredBills = bills.filter(bill =>
+        bill.currency.toLowerCase().includes(searchTerm) ||
+        bill.location.toLowerCase().includes(searchTerm)
+    );
+
+    filteredBills.forEach(renderBill);
+}
+
+// Logout function
+function logout() {
+    alert('Logging out...');
+    window.location.href = 'index.html'; // Redirect to login page
 }
