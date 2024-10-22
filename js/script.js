@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-analytics.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -41,7 +41,7 @@ signupForm.addEventListener('submit', async (e) => {
         document.getElementById('message').textContent = "Thank you for signing up!";
     } catch (error) {
         console.error("Error signing up:", error);
-        document.getElementById('message').textContent = "Signup failed! This email may already be in use.";
+        document.getElementById('message').textContent = "Signup failed! Please try again.";
     }
 });
 
@@ -61,11 +61,3 @@ signinForm.addEventListener('submit', async (e) => {
         document.getElementById('message').textContent = "Login failed. Please check your credentials.";
     }
 });
-
-// Fetch and display all users from Firestore (optional feature)
-async function fetchUsers() {
-    const querySnapshot = await getDocs(collection(db, "users"));
-    querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
-    });
-}
