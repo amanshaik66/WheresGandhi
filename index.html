@@ -3,44 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Where's Gandhi</title>
+    <title>Where's Gandhi - Authentication</title>
 
     <!-- Link to CSS -->
     <link rel="stylesheet" href="css/styles.css">
 
     <!-- Firebase and Custom JavaScript -->
     <script type="module" src="js/script.js" defer></script>
-
-    <!-- SEO and Favicon -->
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
-    <meta name="description" content="Stay updated with Where's Gandhi. Sign up now!">
-    <meta name="keywords" content="Where's Gandhi, updates, news, subscription">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Where's Gandhi</h1>
-            <p>Stay informed. Get updates directly to your inbox.</p>
-        </header>
+    <div class="auth-container">
+        <div class="auth-form">
+            <h2>Welcome to Where's Gandhi</h2>
+            <p id="toggle-text">New user? <span id="toggle-auth">Sign Up</span></p>
 
-        <div class="form-container">
-            <form id="signup-form">
-                <h2>Create an Account</h2>
+            <form id="auth-form">
                 <input type="email" id="email" placeholder="Enter your email" required />
-                <input type="password" id="password" placeholder="Create a password" required />
-                <button type="submit">Sign Up</button>
+                <input type="password" id="password" placeholder="Enter your password" required />
+                <button type="submit" id="auth-button">Sign Up</button>
+                <button type="button" id="google-signin">Continue with Google</button>
             </form>
 
             <p id="message"></p>
-
-            <div class="divider">OR</div>
-
-            <form id="signin-form">
-                <h2>Login to your Account</h2>
-                <input type="email" id="login-email" placeholder="Enter your email" required />
-                <input type="password" id="login-password" placeholder="Enter your password" required />
-                <button type="submit">Log In</button>
-            </form>
+            <div id="loader" class="hidden">Loading...</div>
         </div>
     </div>
 </body>
