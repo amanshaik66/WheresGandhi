@@ -1,7 +1,7 @@
 /* General Styles */
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #6fb1fc, #4364f7, #1f3b8b);
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
     height: 100vh;
     margin: 0;
     display: flex;
@@ -9,41 +9,65 @@ body {
     justify-content: center;
 }
 
-/* Authentication Page Styles */
+/* Authentication Container */
 .auth-container {
     width: 400px;
     background: white;
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
 .auth-form h2 {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: 600;
 }
 
-.auth-form input {
+.auth-form p {
+    margin-bottom: 10px;
+    color: #666;
+}
+
+input {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+    padding: 12px;
+    margin: 8px 0;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
-button {
+.primary-btn {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: none;
-    background-color: #4CAF50;
+    padding: 12px;
+    background-color: #007bff;
     color: white;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
     cursor: pointer;
-    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #45a049;
+.primary-btn:hover {
+    background-color: #0056b3;
+}
+
+.google-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #4285F4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.google-btn:hover {
+    background-color: #3367d6;
 }
 
 .hidden {
@@ -51,7 +75,12 @@ button:hover {
 }
 
 .clickable {
-    color: #1f3b8b;
+    color: #007bff;
     cursor: pointer;
     text-decoration: underline;
+}
+
+#loader {
+    margin-top: 10px;
+    color: #666;
 }
