@@ -10,8 +10,7 @@
   };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
+const app = firebase.initializeApp(firebaseConfig);
 const form = document.getElementById('signup-form');
 form.addEventListener('submit', (e) => {
     e.preventDefault();
