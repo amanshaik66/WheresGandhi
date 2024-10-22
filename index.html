@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Where's Gandhi</title>
-    
+
     <!-- Link to CSS -->
     <link rel="stylesheet" href="css/styles.css">
 
@@ -12,17 +12,30 @@
     <script type="module" src="js/script.js" defer></script>
 </head>
 <body>
-    <h1>Sign up for Where's Gandhi Updates</h1>
-    
-    <form id="signup-form">
-        <input type="email" id="email" placeholder="Enter your email" required />
-        <input type="password" id="password" placeholder="Enter a password" required />
-        <DIV>    
-        <button type="submit">Sign Up</button>
-        </DIV>
-    </form>
-    
-    <p id="message"></p>
-    
+    <div id="signup-container">
+        <h1>Sign up for Where's Gandhi Updates</h1>
+
+        <form id="signup-form">
+            <input 
+                type="email" 
+                id="email" 
+                placeholder="Enter your email" 
+                aria-label="Email Address" 
+                required 
+            />
+            <input 
+                type="password" 
+                id="password" 
+                placeholder="Enter a password" 
+                aria-label="Password" 
+                required 
+            />
+            <div>
+                <button type="submit">Sign Up</button>
+            </div>
+        </form>
+
+        <p id="message" role="alert"></p>
+    </div>
 </body>
 </html>
