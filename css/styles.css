@@ -1,86 +1,77 @@
-/* General Styles */
 body {
+    background: linear-gradient(to right, #74ebd5, #ACB6E5);
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-    height: 100vh;
+    color: #fff;
     margin: 0;
+    padding: 0;
+}
+
+.tracker-container {
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.tracker-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
 }
 
-/* Authentication Container */
-.auth-container {
-    width: 400px;
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.auth-form h2 {
-    margin-bottom: 15px;
-    color: #333;
-    font-weight: 600;
-}
-
-.auth-form p {
-    margin-bottom: 10px;
-    color: #666;
-}
-
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+.primary-btn, .secondary-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
 }
 
 .primary-btn {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.secondary-btn {
+    background-color: #FF5252;
+    color: #fff;
+}
+
+form input {
+    display: block;
     width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    margin-top: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
 }
 
-.primary-btn:hover {
-    background-color: #0056b3;
+form input:focus {
+    outline: none;
+    border-color: #4CAF50;
 }
 
-.google-btn {
+#bill-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#bill-list li {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.search-section input {
     width: 100%;
-    padding: 12px;
-    background-color: #4285F4;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    margin-top: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin: 10px 0;
 }
 
-.google-btn:hover {
-    background-color: #3367d6;
-}
-
-.hidden {
-    display: none;
-}
-
-.clickable {
-    color: #007bff;
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-#loader {
-    margin-top: 10px;
-    color: #666;
+.bill-display {
+    margin-top: 20px;
 }
