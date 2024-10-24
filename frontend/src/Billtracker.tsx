@@ -1,51 +1,38 @@
 // /frontend/src/BillTracker.tsx
 
-import React, { useState, useEffect, FC } from 'react';
-import {
-  Container,
-  Paper,
-  Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-  CircularProgress,
-  Alert,
-} from '@mui/material';
-import { collection, addDoc, getDocs, query, where } from 'firebase/firestore';
+import React, { useState, useEffect, FC, ChangeEvent, FormEvent } from 'react';
+import { Container, Paper, TextField, Button, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, CircularProgress, Alert, Grid } from '@mui/material';
+import { collection, addDoc, getDocs, query, where, DocumentData } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
 import { useAuthContext } from './hooks/useAuth';
 import './assets/styles.css';
 
-const firestore = getFirestore();
-
 interface Bill {
-  id: string;
+  id?: string;
   description: string;
   amount: number;
+  dueDate: string;
   status: 'paid' | 'pending';
 }
+
+const firestore = getFirestore();
 
 const BillTracker: FC = () => {
   const { user } = useAuthContext();
   const [bills, setBills] = useState<Bill[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [open, setOpen] = useState(false);
-  const [newBill, setNewBill] = useState({ description: '', amount: 0 });
+  const [newBill, setNewBill] = useState<Bill>({
+    description: '',
+    amount: 0,
+    dueDate: '',
+    status: 'pending',
+  });
 
   useEffect(() => {
     if (user) {
       fetchBills(user.uid)
-        .then((bills) => setBills(bills))
+        .then((fetchedBills) => setBills(fetchedBills))
         .catch((err) => setError(err.message))
         .finally(() => setLoading(false));
     }
@@ -57,38 +44,27 @@ const BillTracker: FC = () => {
     return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Bill));
   };
 
-  const handleAddBill = async () => {
-    try {
-      await addDoc(collection(firestore, 'bills'), {
-        ...newBill,
-        uid: user?.uid,
-        status: 'pending',
-      });
-      setOpen(false);
-      setNewBill({ description: '', amount: 0 });
-      alert('Bill added successfully!');
-    } catch (err: any) {
-      console.error('Failed to add bill:', err);
-      setError(err.message);
-    }
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewBill((prev) => ({ ...prev, [name]: name === 'amount' ? Number(value) : value }));
   };
 
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <CircularProgress size={50} />
-        <Typography variant="h6">Loading your bills...</Typography>
-      </div>
-    );
-  }
+  const handleAddBill = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
 
-  if (error) {
-    return (
-      <Alert severity="error" className="alert">
-        <Typography variant="body1">{error}</Typography>
-      </Alert>
-    );
-  }
+    try {
+      setLoading(true);
+      await addDoc(collection(firestore, 'bills'), { ...newBill, uid: user.uid });
+      setBills((prev) => [...prev, newBill]);
+      setNewBill({ description: '', amount: 0, dueDate: '', status: 'pending' });
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Container maxWidth="md" className="bill-tracker-container">
@@ -97,9 +73,68 @@ const BillTracker: FC = () => {
           Bill Tracker
         </Typography>
 
-        <Button variant="contained" color="primary" onClick={() => setOpen(true)} className="add-bill-button">
-          Add New Bill
-        </Button>
+        {error && (
+          <Alert severity="error" className="alert">
+            {error}
+          </Alert>
+        )}
+
+        <form onSubmit={handleAddBill} className="bill-form">
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Description"
+                name="description"
+                value={newBill.description}
+                onChange={handleInputChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Amount"
+                name="amount"
+                type="number"
+                value={newBill.amount}
+                onChange={handleInputChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Due Date"
+                name="dueDate"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+                value={newBill.dueDate}
+                onChange={handleInputChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Status"
+                name="status"
+                select
+                SelectProps={{ native: true }}
+                value={newBill.status}
+                onChange={handleInputChange}
+              >
+                <option value="paid">Paid</option>
+                <option value="pending">Pending</option>
+              </TextField>
+            </Grid>
+            <Grid item xs={12}>
+              <Button variant="contained" color="primary" type="submit" disabled={loading} fullWidth>
+                {loading ? <CircularProgress size={24} /> : 'Add Bill'}
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
 
         <TableContainer component={Paper} className="table-container">
           <Table>
@@ -107,51 +142,23 @@ const BillTracker: FC = () => {
               <TableRow>
                 <TableCell>Description</TableCell>
                 <TableCell align="right">Amount</TableCell>
-                <TableCell align="center">Status</TableCell>
+                <TableCell align="right">Due Date</TableCell>
+                <TableCell align="right">Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {bills.map((bill) => (
                 <TableRow key={bill.id}>
                   <TableCell>{bill.description}</TableCell>
-                  <TableCell align="right">${bill.amount.toFixed(2)}</TableCell>
-                  <TableCell align="center">{bill.status}</TableCell>
+                  <TableCell align="right">${bill.amount}</TableCell>
+                  <TableCell align="right">{bill.dueDate}</TableCell>
+                  <TableCell align="right">{bill.status}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Paper>
-
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Add New Bill</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Description"
-            fullWidth
-            value={newBill.description}
-            onChange={(e) => setNewBill((prev) => ({ ...prev, description: e.target.value }))}
-          />
-          <TextField
-            margin="dense"
-            label="Amount"
-            type="number"
-            fullWidth
-            value={newBill.amount}
-            onChange={(e) => setNewBill((prev) => ({ ...prev, amount: parseFloat(e.target.value) }))}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)} color="secondary">
-            Cancel
-          </Button>
-          <Button onClick={handleAddBill} color="primary">
-            Add
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Container>
   );
 };
