@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App'; // Ensure the correct relative path to App.tsx
+import App from './App.tsx'; // Ensure the correct relative path to App.tsx
 import { BrowserRouter } from 'react-router-dom';
 import './assets/styles.css'; // Global styles
 
