@@ -1,58 +1,66 @@
 // /frontend/src/Profile.tsx
 
-import React, { useState, useEffect, FC, ChangeEvent } from 'react';
-import { Container, Paper, TextField, Button, Typography, Avatar, Grid, CircularProgress, Alert } from '@mui/material';
-import { getAuth, updateProfile, User } from 'firebase/auth';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import React, { useState, useEffect, FC } from 'react';
+import { 
+  Container, Paper, Typography, TextField, Button, Avatar, CircularProgress, Alert 
+} from '@mui/material';
+import { getAuth, updateProfile, updatePassword, User } from 'firebase/auth';
 import { useAuthContext } from './hooks/useAuth';
 import './assets/styles.css';
 
-const storage = getStorage();
+const auth = getAuth();
 
 const Profile: FC = () => {
   const { user } = useAuthContext();
-  const [displayName, setDisplayName] = useState<string>(user?.displayName || '');
-  const [photoURL, setPhotoURL] = useState<string>(user?.photoURL || '');
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [displayName, setDisplayName] = useState(user?.displayName || '');
+  const [email, setEmail] = useState(user?.email || '');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {
       setDisplayName(user.displayName || '');
-      setPhotoURL(user.photoURL || '');
+      setEmail(user.email || '');
     }
   }, [user]);
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setSelectedFile(e.target.files[0]);
+  const handleUpdateProfile = async () => {
+    if (!user) return;
+    setLoading(true);
+    setError(null);
+    setSuccessMessage(null);
+
+    try {
+      await updateProfile(user, { displayName });
+      setSuccessMessage('Profile updated successfully!');
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      setError('Failed to update profile. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleProfileUpdate = async () => {
+  const handleUpdatePassword = async () => {
     if (!user) return;
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
+
     setLoading(true);
+    setError(null);
+    setSuccessMessage(null);
 
     try {
-      let photoURLToUpdate = photoURL;
-
-      // Upload photo to Firebase Storage if a new file is selected
-      if (selectedFile) {
-        const storageRef = ref(storage, `profilePictures/${user.uid}`);
-        await uploadBytes(storageRef, selectedFile);
-        photoURLToUpdate = await getDownloadURL(storageRef);
-      }
-
-      // Update user profile in Firebase Auth
-      await updateProfile(user, { displayName, photoURL: photoURLToUpdate });
-
-      setPhotoURL(photoURLToUpdate);
-      setError(null);
-      alert('Profile updated successfully!');
-    } catch (err: any) {
-      console.error('Profile update failed:', err);
-      setError(err.message);
+      await updatePassword(user, password);
+      setSuccessMessage('Password updated successfully!');
+      setPassword('');
+    } catch (error) {
+      console.error('Error updating password:', error);
+      setError('Failed to update password. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -60,8 +68,8 @@ const Profile: FC = () => {
 
   if (!user) {
     return (
-      <Alert severity="error">
-        <Typography variant="h6">You need to be logged in to view this page.</Typography>
+      <Alert severity="error" className="alert">
+        <Typography variant="body1">No user logged in. Please log in to access your profile.</Typography>
       </Alert>
     );
   }
@@ -69,18 +77,30 @@ const Profile: FC = () => {
   return (
     <Container maxWidth="sm" className="profile-container">
       <Paper elevation={3} className="profile-paper">
-        <Typography variant="h4" align="center" gutterBottom>
-          Edit Profile
+        <Avatar 
+          alt={displayName} 
+          src={user.photoURL || ''} 
+          sx={{ width: 100, height: 100, marginBottom: 2 }} 
+        />
+        <Typography variant="h4" gutterBottom>
+          {displayName || 'Your Profile'}
         </Typography>
 
-        <Grid container spacing={3} alignItems="center" justifyContent="center">
-          <Grid item>
-            <Avatar src={photoURL} className="profile-avatar" />
-          </Grid>
-          <Grid item>
-            <input type="file" accept="image/*" onChange={handleFileChange} />
-          </Grid>
-        </Grid>
+        {loading && (
+          <CircularProgress size={30} sx={{ marginBottom: 2 }} />
+        )}
+
+        {error && (
+          <Alert severity="error" className="alert">
+            {error}
+          </Alert>
+        )}
+
+        {successMessage && (
+          <Alert severity="success" className="alert">
+            {successMessage}
+          </Alert>
+        )}
 
         <TextField
           fullWidth
@@ -90,20 +110,41 @@ const Profile: FC = () => {
           margin="normal"
         />
 
-        {error && (
-          <Alert severity="error" className="alert">
-            {error}
-          </Alert>
-        )}
+        <TextField
+          fullWidth
+          label="Email"
+          value={email}
+          margin="normal"
+          disabled
+        />
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleProfileUpdate}
-          disabled={loading}
-          className="profile-button"
+        <TextField
+          fullWidth
+          type="password"
+          label="New Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          margin="normal"
+        />
+
+        <Button 
+          variant="contained" 
+          color="primary" 
+          fullWidth 
+          onClick={handleUpdateProfile} 
+          sx={{ marginTop: 2 }}
         >
-          {loading ? <CircularProgress size={24} /> : 'Update Profile'}
+          Update Profile
+        </Button>
+
+        <Button 
+          variant="outlined" 
+          color="secondary" 
+          fullWidth 
+          onClick={handleUpdatePassword} 
+          sx={{ marginTop: 2 }}
+        >
+          Change Password
         </Button>
       </Paper>
     </Container>
