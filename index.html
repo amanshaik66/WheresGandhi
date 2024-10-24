@@ -1,34 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Where's Gandhi - Sign In/Sign Up</title>
+    <title>Where's Gandhi - Welcome</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+
+    <!-- CSS Styles -->
     <link rel="stylesheet" href="css/styles.css">
-    <script type="module" src="js/script.js" defer></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <header class="header">
-        <h1>Where's Gandhi?</h1>
-        <p>Track the journey of currency bills and discover their stories.</p>
-    </header>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <img src="assets/logo.png" alt="Where's Gandhi Logo" class="nav-logo">
+            <ul class="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="currencyTracker.html">Track Bills</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
 
-    <div class="auth-container">
-        <button id="signup-button" class="btn">New User? Sign Up</button>
-        <button id="signin-button" class="btn">Returning User? Sign In</button>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Track Your Currency's Journey</h1>
+                <p>Discover where your money has been and where it's going. Join our community to make every bill's story unforgettable.</p>
+                <button id="get-started" class="btn-cta">Get Started</button>
+            </div>
+            <div class="hero-image">
+                <img src="assets/currency-tracking.svg" alt="Currency Tracking Illustration">
+            </div>
+        </section>
+
+        <!-- Authentication Section -->
+        <div class="auth-container">
+            <div class="tab">
+                <button class="tablinks active" id="signin-tab">Sign In</button>
+                <button class="tablinks" id="signup-tab">Sign Up</button>
+            </div>
+
+            <form id="signin-form" class="auth-form">
+                <div class="input-group">
+                    <label for="email-signin">Email</label>
+                    <input type="email" id="email-signin" placeholder="Enter your email" required />
+                </div>
+                <div class="input-group">
+                    <label for="password-signin">Password</label>
+                    <input type="password" id="password-signin" placeholder="Enter your password" required />
+                </div>
+                <button type="submit" class="btn-primary">Sign In</button>
+                <p class="switch-auth">New user? <span class="clickable" id="switch-to-signup">Create an account</span></p>
+                <div class="divider">OR</div>
+                <button id="google-signin" class="btn-secondary">
+                    <i class="fab fa-google"></i> Sign in with Google
+                </button>
+                <div id="signin-message" class="message"></div>
+            </form>
+
+            <form id="signup-form" class="auth-form hidden">
+                <div class="input-group">
+                    <label for="name-signup">Full Name</label>
+                    <input type="text" id="name-signup" placeholder="Enter your full name" required />
+                </div>
+                <div class="input-group">
+                    <label for="email-signup">Email</label>
+                    <input type="email" id="email-signup" placeholder="Enter your email" required />
+                </div>
+                <div class="input-group">
+                    <label for="password-signup">Password</label>
+                    <input type="password" id="password-signup" placeholder="Create a password" required />
+                </div>
+                <button type="submit" class="btn-primary">Sign Up</button>
+                <p class="switch-auth">Already have an account? <span class="clickable" id="switch-to-signin">Sign In</span></p>
+                <div id="signup-message" class="message"></div>
+            </form>
+        </div>
+
+        <!-- Features Section -->
+        <section class="features">
+            <h2>Why Use Where's Gandhi?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-search-dollar"></i>
+                    <h3>Track Bills</h3>
+                    <p>Enter bill serial numbers and discover their travel history.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-globe"></i>
+                    <h3>Global Coverage</h3>
+                    <p>Our platform works with multiple currencies worldwide.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-users"></i>
+                    <h3>Community Driven</h3>
+                    <p>Connect with others tracking currency journeys.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 Where's Gandhi. All rights reserved.</p>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </footer>
     </div>
 
-    <div id="auth-form" class="auth-form hidden">
-        <form id="user-form">
-            <input type="text" id="name" placeholder="Full Name" required />
-            <input type="email" id="email" placeholder="Email Address" required />
-            <input type="password" id="password" placeholder="Password" required />
-            <button type="submit" class="btn">Submit</button>
-        </form>
-    </div>
-
-    <footer class="footer">
-        <p>&copy; 2024 Where's Gandhi. All rights reserved.</p>
-    </footer>
+    <!-- JavaScript -->
+    <script type="module" src="js/auth.js"></script>
 </body>
+
 </html>
