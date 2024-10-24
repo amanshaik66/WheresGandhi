@@ -44,6 +44,33 @@ button:hover {
   margin-top: 20px;
 }
 
+/* Profile Styles */
+.profile-container {
+  margin-top: 50px;
+}
+
+.profile-paper {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.profile-button {
+  margin-top: 20px;
+}
+
+.alert {
+  margin-top: 10px;
+}
+
+
 
 /* Loading Container */
 .loading-container {
