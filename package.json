@@ -12,6 +12,12 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write ."
   },
+  "scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "deploy": "gh-pages -d build", 
+  "test": "jest"
+},
   "repository": {
     "type": "git",
     "url": "https://github.com/your-username/wheresgandhi.git"
