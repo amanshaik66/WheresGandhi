@@ -18,12 +18,13 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // Firebase Initialization
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+apiKey: "AIzaSyBHAFsCc4lq4BceInquAKscpNvX988i4_Q",
+  authDomain: "wheresgandhi-77451.firebaseapp.com",
+  projectId: "wheresgandhi-77451",
+  storageBucket: "wheresgandhi-77451.appspot.com",
+  messagingSenderId: "174362976106",
+  appId: "1:174362976106:web:6b86a71d0b679f4ebe0f13",
+  measurementId: "G-Z5QFTF0V58",
 };
 initializeApp(firebaseConfig);
 
