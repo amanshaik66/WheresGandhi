@@ -2,7 +2,7 @@
   "name": "wheresgandhi",
   "version": "1.0.0",
   "description": "Where's Gandhi - Track the journey of your currency and manage your bills effortlessly.",
-  "main": "index.tsx",  // Corrected to use TypeScript entry point
+  "main": "index.tsx",  
   "scripts": {
     "start": "firebase emulators:start",
     "build": "react-scripts build",
