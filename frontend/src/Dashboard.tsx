@@ -1,10 +1,13 @@
 // /frontend/src/Dashboard.tsx
 
 import React, { useEffect, useState, FC } from 'react';
-import { Container, Typography, Grid, Paper, CircularProgress, Alert, Button } from '@mui/material';
+import { 
+  Container, Typography, Grid, Paper, CircularProgress, Alert, Button 
+} from '@mui/material';
 import { useAuthContext } from './hooks/useAuth';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
+import { logDashboardView } from '../analytics/dashboard-analytics'; // Import analytics
 import './assets/styles.css';
 
 const firestore = getFirestore();
@@ -23,6 +26,7 @@ const Dashboard: FC = () => {
 
   useEffect(() => {
     if (user) {
+      logDashboardView(); // Log the dashboard view event
       fetchUserStats(user.uid)
         .then((stats) => setUserStats(stats))
         .catch((err) => setError(err.message))
@@ -50,7 +54,9 @@ const Dashboard: FC = () => {
     return (
       <div className="loading-container">
         <CircularProgress size={50} />
-        <Typography variant="h6">Loading your dashboard...</Typography>
+        <Typography variant="h6" className="loading-text">
+          Loading your dashboard...
+        </Typography>
       </div>
     );
   }
@@ -105,7 +111,12 @@ const Dashboard: FC = () => {
           </Grid>
         </Grid>
 
-        <Button variant="contained" color="primary" className="refresh-button" onClick={() => window.location.reload()}>
+        <Button
+          variant="contained"
+          color="primary"
+          className="refresh-button"
+          onClick={() => window.location.reload()}
+        >
           Refresh
         </Button>
       </Paper>
