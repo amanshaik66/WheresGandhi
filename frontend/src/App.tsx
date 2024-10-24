@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redeclare */
 // /frontend/src/App.tsx
 
 import React, { useEffect, useState, FC, Suspense, createContext, useContext, ReactNode } from 'react';
@@ -11,8 +12,6 @@ import Dashboard from './Dashboard';
 import Authentication from './Authentication';
 import Profile from './Profile';
 import BillTracker from './BillTracker';
-import AdminPanel from './AdminPanel';
-import ErrorBoundary from './ErrorBoundary';
 import './assets/styles.css';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -53,65 +52,6 @@ const theme = createTheme({
   },
 });
 
-const App: FC = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [role, setRole] = useState<string | undefined>();
-  const [loading, setLoading] = useState(true);
-  const { t } = useTranslation(); // i18n for localization
-
-  // Monitor Auth State Changes
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setUser(currentUser);
-      if (currentUser) {
-        const userRole = await fetchUserRole(currentUser.uid);
-        setRole(userRole);
-      }
-      setLoading(false);
-    });
-    return () => unsubscribe(); // Cleanup subscription on unmount
-  }, []);
-
-  // Simulate Role Fetch (Replace with Firestore logic if needed)
-  const fetchUserRole = async (uid: string): Promise<string> => {
-    return uid === 'admin-user-id' ? 'admin' : 'user';
-  };
-
-  // Toast Notifications
-  const notify = (message: string, type: 'success' | 'error' = 'success') =>
-    type === 'success' ? toast.success(message) : toast.error(message);
-
-  // Loading Screen
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <CircularProgress size={70} />
-        <p>{t('loading')}</p>
-      </div>
-    );
-  }
-
-  return (
-    <AuthContext.Provider value={{ user, loading, role }}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router>
-          <ErrorBoundary>
-            <ToastContainer position="top-right" autoClose={5000} />
-            <Snackbar open={loading}>
-              <Alert severity="info">
-                <Trans>Fetching user data...</Trans>
-              </Alert>
-            </Snackbar>
-            <Suspense fallback={<LoadingFallback />}>
-              <AppRoutes user={user} role={role} notify={notify} />
-            </Suspense>
-          </ErrorBoundary>
-        </Router>
-      </ThemeProvider>
-    </AuthContext.Provider>
-  );
-};
 
 const LoadingFallback: FC = () => (
   <div className="loading-container">
@@ -137,5 +77,10 @@ const AppRoutes: FC<AppRoutesProps> = ({ user, role, notify }) => (
     <Route path="/admin" element={role === 'admin' ? <AdminPanel /> : <Navigate to="/dashboard" replace />} />
   </Routes>
 );
+
+const App = () => {
+  return <div>Hello, WheresGandhi!</div>;
+};
+
 
 export default App;
