@@ -1,6 +1,6 @@
 // /frontend/src/App.tsx
 
-import React, { useEffect, useState, FC, Suspense, createContext, useContext } from 'react';
+import React, { useEffect, useState, FC, Suspense, createContext, useContext, ReactNode } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
@@ -16,7 +16,7 @@ import ErrorBoundary from './ErrorBoundary';
 import './assets/styles.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Firebase Configuration
+// Firebase Initialization
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -30,29 +30,22 @@ initializeApp(firebaseConfig);
 // Firebase Auth Instance
 const auth = getAuth();
 
-// Authentication Context
+// Define Authentication Context
 interface AuthContextProps {
   user: User | null;
   loading: boolean;
   role?: string;
 }
+
 const AuthContext = createContext<AuthContextProps>({ user: null, loading: true });
+const useAuthContext = () => useContext(AuthContext); // Custom Hook
 
-// Custom Hook for Using AuthContext
-const useAuthContext = () => useContext(AuthContext);
-
-// Theme Configuration
+// Define Theme Configuration
 const theme = createTheme({
   palette: {
-    primary: {
-      main: '#1976d2',
-    },
-    secondary: {
-      main: '#f50057',
-    },
-    background: {
-      default: '#f5f5f5',
-    },
+    primary: { main: '#1976d2' },
+    secondary: { main: '#f50057' },
+    background: { default: '#f5f5f5' },
   },
   typography: {
     fontFamily: 'Roboto, Arial, sans-serif',
@@ -65,29 +58,29 @@ const App: FC = () => {
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation(); // i18n for localization
 
-  // Listen for authentication state changes
+  // Monitor Auth State Changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        // Simulate a role fetch from Firestore or user claims
-        const fetchedRole = await fetchUserRole(currentUser.uid);
-        setRole(fetchedRole);
+        const userRole = await fetchUserRole(currentUser.uid);
+        setRole(userRole);
       }
       setLoading(false);
     });
-    return () => unsubscribe();
+    return () => unsubscribe(); // Cleanup subscription on unmount
   }, []);
 
+  // Simulate Role Fetch (Replace with Firestore logic if needed)
   const fetchUserRole = async (uid: string): Promise<string> => {
-    // Simulated role fetch: In real projects, fetch from Firestore or Firebase claims.
-    if (uid === 'admin-user-id') return 'admin';
-    return 'user';
+    return uid === 'admin-user-id' ? 'admin' : 'user';
   };
 
+  // Toast Notifications
   const notify = (message: string, type: 'success' | 'error' = 'success') =>
     type === 'success' ? toast.success(message) : toast.error(message);
 
+  // Loading Screen
   if (loading) {
     return (
       <div className="loading-container">
@@ -109,15 +102,8 @@ const App: FC = () => {
                 <Trans>Fetching user data...</Trans>
               </Alert>
             </Snackbar>
-            <Suspense fallback={<div className="loading-container"><CircularProgress size={40} /></div>}>
-              <Routes>
-                <Route path="/" element={<Navigate to={user ? '/dashboard' : '/login'} replace />} />
-                <Route path="/dashboard" element={user ? <Dashboard notify={notify} /> : <Navigate to="/login" replace />} />
-                <Route path="/login" element={!user ? <Authentication notify={notify} /> : <Navigate to="/dashboard" replace />} />
-                <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" replace />} />
-                <Route path="/bill-tracker" element={user ? <BillTracker /> : <Navigate to="/login" replace />} />
-                <Route path="/admin" element={role === 'admin' ? <AdminPanel /> : <Navigate to="/dashboard" replace />} />
-              </Routes>
+            <Suspense fallback={<LoadingFallback />}>
+              <AppRoutes user={user} role={role} notify={notify} />
             </Suspense>
           </ErrorBoundary>
         </Router>
@@ -125,5 +111,30 @@ const App: FC = () => {
     </AuthContext.Provider>
   );
 };
+
+const LoadingFallback: FC = () => (
+  <div className="loading-container">
+    <CircularProgress size={40} />
+    <p>Loading...</p>
+  </div>
+);
+
+// Centralize App Routes for Clean Routing Logic
+interface AppRoutesProps {
+  user: User | null;
+  role?: string;
+  notify: (message: string, type?: 'success' | 'error') => void;
+}
+
+const AppRoutes: FC<AppRoutesProps> = ({ user, role, notify }) => (
+  <Routes>
+    <Route path="/" element={<Navigate to={user ? '/dashboard' : '/login'} replace />} />
+    <Route path="/dashboard" element={user ? <Dashboard notify={notify} /> : <Navigate to="/login" replace />} />
+    <Route path="/login" element={!user ? <Authentication notify={notify} /> : <Navigate to="/dashboard" replace />} />
+    <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" replace />} />
+    <Route path="/bill-tracker" element={user ? <BillTracker /> : <Navigate to="/login" replace />} />
+    <Route path="/admin" element={role === 'admin' ? <AdminPanel /> : <Navigate to="/dashboard" replace />} />
+  </Routes>
+);
 
 export default App;
