@@ -1,0 +1,48 @@
+{
+  "name": "wheresgandhi-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for WheresGandhi - A modern app to manage bills and referrals.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css}'"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-scripts": "5.0.1",
+    "react-router-dom": "^6.0.0",
+    "firebase": "^9.6.1",
+    "axios": "^0.24.0",
+    "react-toastify": "^9.0.0",
+    "@mui/material": "^5.0.0",
+    "i18next": "^21.6.0",
+    "react-i18next": "^11.15.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "eslint-plugin-react": "^7.0.0",
+    "prettier": "^2.4.1"
+  },
+  "eslintConfig": {
+    "extends": ["react-app", "react-app/jest"]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "author": "WheresGandhi Team",
+  "license": "MIT"
+}
