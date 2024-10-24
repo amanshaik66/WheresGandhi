@@ -1,0 +1,22 @@
+{
+  "projectId": "wheresgandhi-77451",
+  "public": "frontend/build",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ],
+  "hosting": {
+    "site": "wheresgandhi",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "functions": {
+    "runtime": "nodejs16",
+    "source": "backend"
+  }
+}

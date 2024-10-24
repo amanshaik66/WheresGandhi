@@ -1,0 +1,47 @@
+# Notes and Future Ideas for Where's Gandhi
+
+## Features to Implement
+1. **Dark Mode**: 
+   - Add a toggle between light and dark themes for better accessibility.
+   - Use Material-UI’s theme switcher for seamless integration.
+
+2. **Push Notifications**: 
+   - Implement Firebase Cloud Messaging (FCM) for important alerts like bill due dates.
+   - Allow users to customize notification preferences.
+
+3. **Offline Mode**:
+   - Enable offline usage for the mobile app with local data storage (e.g., using AsyncStorage or IndexedDB).
+   - Sync data to Firestore once the connection is restored.
+
+4. **Internationalization (i18n)**:
+   - Expand the app with multiple languages (e.g., Spanish, French, Hindi).
+   - Use the `react-i18next` library for translations.
+
+5. **Payment Integration**:
+   - Integrate a payment gateway (e.g., Stripe or PayPal) to allow users to pay bills directly through the app.
+
+6. **Leaderboard for Referrals**:
+   - Create a leaderboard to display the top referrers.
+   - Add badges and rewards for referral milestones.
+
+7. **Advanced Analytics**:
+   - Provide detailed financial analytics, such as spending trends and savings insights.
+   - Export analytics reports in CSV or PDF format.
+
+8. **Two-Factor Authentication (2FA)**:
+   - Add 2FA using OTPs or authenticator apps for enhanced security.
+
+## Known Issues
+1. **Refresh Issue on Mobile App**: 
+   - BillTrackerMobile occasionally fails to update the list on refresh. Investigate the cause and ensure proper state syncing.
+   
+2. **Slow Initial Load on Web**:
+   - Web dashboard takes a few seconds to load stats for some users. Consider pre-loading data or adding a skeleton screen.
+
+3. **Clipboard Permissions on iOS**:
+   - Some users report issues with copying the referral code on iOS. Investigate Clipboard API compatibility issues.
+
+## Collaboration Notes
+- **Next Sprint**: Focus on adding dark mode and implementing push notifications.
+- **Code Review Feedback**: Ensure consistent use of TypeScript types across all files.
+- **Testing**: Add more unit tests for backend routes (e.g., `billRoutes.js` and `authRoutes.js`).

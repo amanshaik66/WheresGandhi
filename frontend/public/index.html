@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <!-- Meta Tags for SEO -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="WheresGandhi - Manage your bills, referrals, and dashboard seamlessly with a sleek, modern UI." />
+    <meta name="keywords" content="Bill Tracker, Dashboard, Referrals, React, Firebase, Corporate UI" />
+    <meta name="author" content="WheresGandhi Team" />
+    <meta name="robots" content="index, follow" />
+
+    <title>WheresGandhi - Modern Bill Tracker</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" type="image/x-icon" />
+
+    <!-- Open Graph: Social Media Preview -->
+    <meta property="og:title" content="WheresGandhi - Corporate Bill Tracker" />
+    <meta property="og:description" content="Easily track bills and manage referrals with WheresGandhi." />
+    <meta property="og:image" content="%PUBLIC_URL%/banner.jpg" />
+    <meta property="og:url" content="https://wheresgandhi-77451.web.app" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="WheresGandhi - Modern Bill Tracker" />
+    <meta name="twitter:description" content="Corporate-level dashboard to track bills and referrals." />
+    <meta name="twitter:image" content="%PUBLIC_URL%/banner.jpg" />
+
+    <!-- Fonts & Stylesheets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="%PUBLIC_URL%/styles.css" />
+    
+    <!-- Theme Detection Script -->
+    <script>
+      // Detect system theme preference and apply dark or light mode automatically
+      const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (userPrefersDark) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    </script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <!-- Root Element for React App -->
+    <div id="root"></div>
+
+    <!-- Performance Optimizations -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z5QFTF0V58"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-Z5QFTF0V58');
+    </script>
+  </body>
+</html>
