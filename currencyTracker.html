@@ -5,34 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Currency Bill Tracker</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script type="module" src="js/script.js" defer></script>
 </head>
 <body>
+    <header class="header">
+        <h1>Track Your Currency</h1>
+    </header>
+
     <div class="tracker-container">
-        <header class="tracker-header">
-            <h2>Currency Bill Entry & Tracking</h2>
-            <button id="logout-button" class="secondary-btn">Logout</button>
-        </header>
+        <form id="bill-form">
+            <input type="text" id="serial-number" placeholder="Enter Bill Serial Number" required />
+            <input type="text" id="bill-amount" placeholder="Enter Bill Amount" required />
+            <input type="text" id="currency" placeholder="Enter Currency (e.g., INR, USD)" required />
+            <button type="submit" class="btn">Submit Bill</button>
+        </form>
 
-        <section class="form-section">
-            <form id="bill-form">
-                <input type="number" id="bill-amount" placeholder="Enter Bill Amount" required />
-                <input type="text" id="currency" placeholder="Enter Currency (e.g., INR, USD)" required />
-                <input type="text" id="location" placeholder="Enter Location (City)" required />
-                <button type="submit" class="primary-btn">Submit Bill</button>
-            </form>
-        </section>
-
-        <section class="search-section">
-            <h3>Search Tracked Bills</h3>
-            <input type="text" id="search-bar" placeholder="Search by currency or location..." />
-        </section>
-
-        <section class="bill-display">
-            <h3>Tracked Bills:</h3>
-            <ul id="bill-list"></ul>
-        </section>
+        <h3>Tracked Bills:</h3>
+        <ul id="bill-list"></ul>
     </div>
 
-    <script src="js/currencyTracker.js"></script>
+    <footer class="footer">
+        <p>&copy; 2024 Where's Gandhi. All rights reserved.</p>
+    </footer>
 </body>
 </html>
