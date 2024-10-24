@@ -1,10 +1,12 @@
+// /frontend/src/index.tsx
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App'; // Main App component
+import App from './App'; // Ensure the correct relative path to App.tsx
 import { BrowserRouter } from 'react-router-dom';
 import './assets/styles.css'; // Global styles
 
-// Custom Error Boundary to handle any rendering errors gracefully
+// Error Boundary to handle rendering errors gracefully
 class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
   constructor(props: { children: React.ReactNode }) {
     super(props);
@@ -12,13 +14,11 @@ class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { has
   }
 
   static getDerivedStateFromError(): { hasError: boolean } {
-    // Update state so the next render will show the fallback UI
-    return { hasError: true };
+    return { hasError: true }; // Show fallback UI if an error occurs
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
-    // Log the error to the console or an error reporting service
-    console.error('ErrorBoundary caught an error', error, errorInfo);
+    console.error('ErrorBoundary caught an error:', error, errorInfo);
   }
 
   render(): React.ReactNode {
@@ -29,8 +29,9 @@ class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { has
   }
 }
 
-// Get the root element from the HTML file
+// Safely get the root element from the DOM
 const rootElement = document.getElementById('root');
+
 if (!rootElement) {
   console.error("Root element not found. Ensure 'index.html' contains a div with id='root'.");
 } else {
