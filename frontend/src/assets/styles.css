@@ -4,6 +4,8 @@ body {
   padding: 0;
   font-family: 'Roboto', sans-serif;
   background-color: #f5f5f5;
+  color: #333;
+  line-height: 1.6;
 }
 
 button {
@@ -12,21 +14,37 @@ button {
   border: none;
   padding: 10px 20px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  border-radius: 4px;
+  transition: background-color 0.3s ease-in-out, transform 0.2s;
   margin-top: 10px;
 }
 
 button:hover {
   background-color: #1565c0;
+  transform: scale(1.05);
+}
+
+/* Reusable Containers */
+.container {
+  margin-top: 50px;
+  padding: 30px;
+}
+
+.paper {
+  padding: 30px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.alert {
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 /* Bill Tracker Styles */
 .bill-tracker-container {
-  margin-top: 50px;
-}
-
-.bill-tracker-paper {
-  padding: 30px;
+  margin-top: 30px;
 }
 
 .bill-form {
@@ -37,29 +55,16 @@ button:hover {
   margin-top: 20px;
 }
 
-.alert {
-  margin-bottom: 10px;
-}
-
-
 /* Dashboard Styles */
 .dashboard-container {
   margin-top: 50px;
-}
-
-.dashboard-paper {
-  padding: 30px;
-  text-align: center;
 }
 
 .stat-card {
   padding: 20px;
   background-color: #f5f5f5;
   margin-top: 10px;
-}
-
-.alert {
-  margin-top: 20px;
+  border-radius: 8px;
 }
 
 .refresh-button {
@@ -68,33 +73,21 @@ button:hover {
 
 /* Profile Styles */
 .profile-container {
-  margin-top: 50px;
-}
-
-.profile-paper {
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
 }
 
 .profile-avatar {
   width: 100px;
   height: 100px;
-  margin-bottom: 10px;
+  margin: 20px 0;
+  border-radius: 50%;
 }
 
 .profile-button {
   margin-top: 20px;
 }
 
-.alert {
-  margin-top: 10px;
-}
-
-
-
-/* Loading Container */
+/* Loading State */
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -111,18 +104,22 @@ button:hover {
   color: #555;
 }
 
-/* Scoped Authentication Styles */
+/* Authentication Styles */
 .auth-container {
   padding: 30px;
-  margin-top: 100px;
+  margin-top: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Snackbar Styling */
 .MuiAlert-root {
   font-size: 1rem;
+  display: flex;
   align-items: center;
 }
 
