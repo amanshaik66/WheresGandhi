@@ -20,6 +20,28 @@ button:hover {
   background-color: #1565c0;
 }
 
+/* Bill Tracker Styles */
+.bill-tracker-container {
+  margin-top: 50px;
+}
+
+.bill-tracker-paper {
+  padding: 30px;
+}
+
+.bill-form {
+  margin-bottom: 20px;
+}
+
+.table-container {
+  margin-top: 20px;
+}
+
+.alert {
+  margin-bottom: 10px;
+}
+
+
 /* Dashboard Styles */
 .dashboard-container {
   margin-top: 50px;
